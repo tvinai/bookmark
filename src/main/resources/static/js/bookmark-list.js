@@ -6,18 +6,29 @@
 
         $bookmarkContainer.empty();
 
+        $table = urlTable.getTable();
+        $tableHeader = urlTable.getTableHeader('BOOKMARKS');
+        $tableBody = urlTable.getTableBody();
+
         let i = 0;
         let n = bookmarks.length;
         for (i = 0; i < n; i++) {
 
             let $link = $('<a>', {
                 'href': bookmarks[i].url,
-                'text': bookmarks[i].name
+                'text': bookmarks[i].name,
+                'target': '_blank'
             });
 
-            $bookmarkContainer.append($link);
+            let $tableRow = urlTable.getTableRow($link);
+            $tableBody.append($tableRow);
 
         }
+
+        $table.append($tableHeader);
+        $table.append($tableBody);
+
+        $bookmarkContainer.append($table);
 
     }
 
