@@ -1,12 +1,11 @@
 package com.hao.bookmark;
 
+import com.hao.bookmark.mapper.BookmarkEntityMapper;
 import com.hao.bookmark.model.Bookmark;
 import com.hao.bookmark.model.entity.BookmarkEntity;
+import com.hao.bookmark.model.request.SaveBookmarkRequest;
 import com.hao.bookmark.repository.BookmarkRepository;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -32,9 +31,24 @@ public class BookmarkController {
         }
 
         List<Bookmark> bookmarkList = bookmarkEntityList.stream()
-                .map(it -> new Bookmark(it.getName(), it.getUrl()))
+                .map(it -> new Bookmark(it.getId(), it.getName(), it.getUrl()))
                 .toList();
 
         return bookmarkList;
     }
+
+    @CrossOrigin(origins = "http://localhost:5000")
+    @PostMapping
+    public void saveBookmark(@RequestBody SaveBookmarkRequest request) {
+
+        BookmarkEntity bookmarkEntity = BookmarkEntityMapper.from(request);
+        bookmarkRepository.save(bookmarkEntity);
+    }
+
+    @CrossOrigin(origins = "http://localhost:5000")
+    @DeleteMapping("{bookmarkId}")
+    public void deleteBookmark(@PathVariable String bookmarkId) {
+        bookmarkRepository.deleteById(bookmarkId);
+    }
+
 }
