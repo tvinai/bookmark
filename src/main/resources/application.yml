@@ -1,3 +1,14 @@
 spring:
   application:
     name: bookmark
+  datasource:
+    url: "jdbc:mysql://localhost:3306/bookmark"
+    username: root
+    password: root
+  jpa:
+    show-sql: true
+  flyway:
+    enabled: true
+    validate-on-migration: true
+    locations: classpath:db/migrations
+
