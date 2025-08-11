@@ -51,4 +51,14 @@ public class BookmarkController {
         bookmarkRepository.deleteById(bookmarkId);
     }
 
+    @CrossOrigin(origins = "http://localhost:5000")
+    @GetMapping("{bookmarkId}")
+    public Bookmark getBookmarkDetails(@PathVariable String bookmarkId) {
+
+        BookmarkEntity bookmark = bookmarkRepository.getById(bookmarkId);
+
+        return BookmarkEntityMapper.from(bookmark);
+
+    }
+
 }
